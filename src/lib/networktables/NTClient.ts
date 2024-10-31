@@ -14,7 +14,7 @@ export async function getClient() {
     const socket: any = client.client.messenger.socket;
     const originalOnAnnounce = socket.onAnnounce;
     socket.onAnnounce = (params: AnnounceMessageParams) => {
-        console.log(`New topic announced: ${params.name}`);
+        // console.log(`New topic announced: ${params.name}`);
         const topic = client.createTopic(params.name, params.type as unknown as NetworkTablesTypeInfo);
         originalOnAnnounce(params);
         topic.subscribe(value => {

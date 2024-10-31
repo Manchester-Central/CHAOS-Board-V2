@@ -1,37 +1,60 @@
-'use client'
+"use client";
 
 import { useAppSelector } from "@/lib/redux/hooks";
 import { getClient } from "../lib/networktables/NTClient";
 import styles from "./page.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import GridLayout from "react-grid-layout";
+
+import { Responsive, WidthProvider } from "react-grid-layout";
+
+const FullGridLayout = WidthProvider(GridLayout);
+
+import '/node_modules/react-grid-layout/css/styles.css';
+import '/node_modules/react-resizable/css/styles.css';
+
+const defaultNtKeys = [
+  '/Shuffleboard/Logging/timeMs',
+  '/FMSInfo/IsRedAlliance',
+  '/SmartDashboard/Robot2024/State',
+]
+
+function saveLayout(layout: GridLayout.Layout[]) {
+  console.log(layout);
+  localStorage.setItem('grid-layout', JSON.stringify(layout));
+}
+
+function getLayout() {
+  try {
+    const layoutString = localStorage.getItem('grid-layout');
+    if (layoutString) {
+      console.log(layoutString);
+      return JSON.parse(layoutString);
+    }
+  } catch (error) {
+    console.warn(error);
+  }
+  return defaultNtKeys.map(key => ({i: key}));
+}
 
 export default function Home() {
-  const timeMs = useAppSelector(data => data.ntSlice.data['/Shuffleboard/Logging/timeMs'] as number)
-  const data = useAppSelector(data => data.ntSlice.data)
+  const data = useAppSelector(data => data.ntSlice.data);
+  const [layout, setLayout] = useState<GridLayout.Layout[]>();
 
   useEffect(() => {
     getClient().then(() => console.log('connected')).catch(error => console.error(error));
+    setLayout(getLayout());
   }, []);
+
+  if(!layout) {
+    return <>Loading...</>
+  }
 
   return (
     <div className={styles.page}>
-      {timeMs}
-      <table style={{padding: 100, maxWidth: '100vw'}}>
-        <thead>
-          <tr>
-            <th>Key</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.entries(data).map(([key, value]) => 
-            <tr key={key}>
-              <td>{key}</td>
-              <td>{value?.toString() ?? ''}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <FullGridLayout layout={layout} className="layout" cols={12} rowHeight={50} compactType={null} autoSize={true} resizeHandles={["sw", "nw", "se", "ne"]} onLayoutChange={saveLayout}>
+        {defaultNtKeys.map((key) => <div key={key} style={{padding: 10}}><div style={{overflow: 'auto', minHeight: '100%', maxHeight: '100%'}}>{data[key]}</div></div>)}
+      </FullGridLayout>
     </div>
   );
 }
