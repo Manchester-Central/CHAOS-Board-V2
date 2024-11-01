@@ -1,6 +1,16 @@
 {
     "allTabs": {
-        "Default": {
+        "Coach Tab": {
+            "layout": [],
+            "name": "Coach Tab",
+            "widgets": []
+        },
+        "Swerve Debug": {
+            "layout": [],
+            "name": "Swerve Debug",
+            "widgets": []
+        },
+        "Drivers Tab": {
             "layout": [
                 {
                     "w": 3,
@@ -30,7 +40,7 @@
                     "static": false
                 }
             ],
-            "name": "Default",
+            "name": "Drivers Tab",
             "widgets": [
                 {
                     "key": "/Shuffleboard/Logging/timeMs"
@@ -42,12 +52,7 @@
                     "key": "/SmartDashboard/Robot2024/State"
                 }
             ]
-        },
-        "Coach Tab": {
-            "layout": [],
-            "name": "Coach Tab",
-            "widgets": []
         }
     },
-    "currentTab": "Default"
+    "currentTab": "Drivers Tab"
 }

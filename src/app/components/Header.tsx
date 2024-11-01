@@ -3,6 +3,8 @@
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { addTab, deleteTab, updateCurrentTab, updateTab, updateTabName } from "@/lib/redux/tabsSlice";
 import { saveTabs } from "@/lib/sever-actions/tabs";
+import { faCheckCircle, faPencil, faPlus, faTrash, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -84,22 +86,22 @@ function Header() {
 
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={newTabPressed}>
-              Create New Tab
+              <FontAwesomeIcon icon={faPlus} /> Create New Tab
             </NavDropdown.Item>
             <NavDropdown.Item onClick={updateTabNamePressed}>
-              Update '{currentTab}' Tab Name
+              <FontAwesomeIcon icon={faPencil} /> Update '{currentTab}' Tab Name
             </NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Header>
               Danger Zone
             </NavDropdown.Header>
-            <NavDropdown.Item onClick={deleteTabPressed}>
-              Delete '{currentTab}' Tab
+            <NavDropdown.Item onClick={deleteTabPressed} className="bg-danger text-white">
+              <FontAwesomeIcon icon={faTrash} /> Delete '{currentTab}' Tab
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <Navbar.Text style={{marginLeft: 50}} className="justify-content-end">
-          <small>Connected? {isConnected?.toString()}</small>
+          {isConnected ? <>Connected <FontAwesomeIcon icon={faCheckCircle} /> </> : <>Not connected <FontAwesomeIcon icon={faWarning} /></> }
         </Navbar.Text>
       </Container>
     </Navbar>
