@@ -1,61 +1,43 @@
 "use client";
 
-import { useAppSelector } from "@/lib/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { loadInitialTabs, updateTab } from "@/lib/redux/tabsSlice";
+import { useEffect, useState } from "react";
+import GridLayout, { WidthProvider } from "react-grid-layout";
 import { getClient } from "../lib/networktables/NTClient";
 import styles from "./page.module.css";
-import { useEffect, useState } from "react";
-import GridLayout from "react-grid-layout";
-
-import { Responsive, WidthProvider } from "react-grid-layout";
+import '/node_modules/react-grid-layout/css/styles.css';
+import '/node_modules/react-resizable/css/styles.css';
+import { getTabs } from "@/lib/sever-actions/tabs";
 
 const FullGridLayout = WidthProvider(GridLayout);
 
-import '/node_modules/react-grid-layout/css/styles.css';
-import '/node_modules/react-resizable/css/styles.css';
-
-const defaultNtKeys = [
-  '/Shuffleboard/Logging/timeMs',
-  '/FMSInfo/IsRedAlliance',
-  '/SmartDashboard/Robot2024/State',
-]
-
-function saveLayout(layout: GridLayout.Layout[]) {
-  console.log(layout);
-  localStorage.setItem('grid-layout', JSON.stringify(layout));
-}
-
-function getLayout() {
-  try {
-    const layoutString = localStorage.getItem('grid-layout');
-    if (layoutString) {
-      console.log(layoutString);
-      return JSON.parse(layoutString);
-    }
-  } catch (error) {
-    console.warn(error);
-  }
-  return defaultNtKeys.map(key => ({i: key}));
-}
-
 export default function Home() {
-  const data = useAppSelector(data => data.ntSlice.data);
-  const isConnected = useAppSelector(data => data.ntSlice.isConnected);
-  const [layout, setLayout] = useState<GridLayout.Layout[]>();
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(data => data.nt.data);
+  const currentTabName = useAppSelector(app => app.tabs.currentTab);
+  const currentTab = useAppSelector(app => app.tabs.allTabs[app.tabs.currentTab]);
 
   useEffect(() => {
     getClient().then(() => console.log('connected')).catch(error => console.error(error));
-    setLayout(getLayout());
+    // setLayout(getLayout());
+    getTabs().then(tabs => dispatch(loadInitialTabs(tabs)));
   }, []);
 
-  if(!layout) {
-    return <>Loading...</>
+  const updateLayout = (layout: GridLayout.Layout[]) => {
+    const tabUpdate = {...currentTab, layout};
+    console.log(tabUpdate);
+    dispatch(updateTab(tabUpdate));
+  }
+
+  if (!currentTab?.layout) {
+    return <>Loading... {JSON.stringify(currentTab ?? {})} {currentTabName}</>
   }
 
   return (
     <div className={styles.page}>
-      {isConnected.toString()}
-      <FullGridLayout layout={layout} className="layout" cols={20} rowHeight={50} compactType={null} autoSize={true} resizeHandles={["sw", "nw", "se", "ne"]} onLayoutChange={saveLayout}>
-        {defaultNtKeys.map((key) => <div key={key} style={{padding: 10}}><div style={{overflow: 'auto', minHeight: '100%', maxHeight: '100%'}}>{data[key]?.toString()}</div></div>)}
+      <FullGridLayout layout={currentTab.layout} className="layout" cols={20} rowHeight={50} compactType={null} autoSize={true} resizeHandles={["sw", "nw", "se", "ne"]} onLayoutChange={updateLayout}>
+        {currentTab.widgets.map((widget) => <div key={widget.key} style={{padding: 10}}><div style={{overflow: 'auto', minHeight: '100%', maxHeight: '100%'}}>{widget.key} <br /> {data[widget.key]?.toString()}</div></div>)}
       </FullGridLayout>
     </div>
   );

@@ -1,6 +1,8 @@
 :root {
-  --background: #ffffff;
+  --background: #ffd1b2;
   --foreground: #171717;
+  --primary-color: #134122;
+  --bs-emphasis-color-rgb: #ffffff;
 }
 
 html,

@@ -1,10 +1,12 @@
 "use client"
 import { configureStore } from '@reduxjs/toolkit'
 import ntSlice from './networkTablesSlice'
+import tabsSlice from './tabsSlice'
 
 const store = configureStore({
     reducer: {
-      'ntSlice': ntSlice
+      'nt': ntSlice,
+      'tabs': tabsSlice,
     }
   });
 
