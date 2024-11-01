@@ -9,6 +9,7 @@ import styles from "./page.module.css";
 import '/node_modules/react-grid-layout/css/styles.css';
 import '/node_modules/react-resizable/css/styles.css';
 import { getTabs } from "@/lib/sever-actions/tabs";
+import WidgetDisplay from "./components/WidgetDisplay";
 
 const FullGridLayout = WidthProvider(GridLayout);
 
@@ -35,8 +36,10 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <FullGridLayout layout={currentTab.layout} className="layout" cols={20} rowHeight={50} compactType={null} autoSize={true} resizeHandles={["sw", "nw", "se", "ne"]} onLayoutChange={updateLayout}>
-        {currentTab.widgets.map((widget) => <div key={widget.key} style={{padding: 10, background: 'white'}}><div style={{overflow: 'auto', minHeight: '100%', maxHeight: '100%'}}>{widget.key} <br /> {data[widget.key]?.value?.toString()}</div></div>)}
+      <FullGridLayout layout={currentTab.layout} className="layout" cols={20} rowHeight={50} compactType={null} autoSize={true} resizeHandles={["sw", "nw", "se", "ne"]} onLayoutChange={updateLayout} preventCollision={true} allowOverlap={true}>
+        {currentTab.widgets.map((widget) => <div key={widget.key}>
+          <WidgetDisplay widget={widget} />
+        </div>)}
       </FullGridLayout>
     </div>
   );

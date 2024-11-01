@@ -1,6 +1,6 @@
 "use client";
 
-import { getEntryName, getEntryParentPath, NtEntry } from "@/lib/data/ntEntry";
+import { getEntryName, getEntryParentPath, getFilteredAndSortedList, NtEntry } from "@/lib/data/ntEntry";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { addWidgetToTab, removeWidgetFromTab } from "@/lib/redux/tabsSlice";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -40,8 +40,8 @@ function WidgetList({isOpen, onHide}: WidgetListProps) {
       <div style={{margin: 5, display: 'flex', flexDirection: 'row', minHeight: 48, gap: 10}}>
         {button} 
         <div style={{display: 'flex', flexDirection: 'column', minWidth: '50%'}}>
-          <div className="text-muted"><small>{getEntryParentPath(entry)}</small></div>
-          <div>{getEntryName(entry)}</div>
+          <div className="text-muted"><small>{getEntryParentPath(entry.key)}</small></div>
+          <div>{getEntryName(entry.key)}</div>
         </div>
         <div style={{flexGrow: 1, textWrap: 'nowrap', maxWidth: '50%', overflow: 'hidden', textOverflow: 'ellipsis'}}>
           {entry.value?.toString()}
@@ -60,10 +60,7 @@ function WidgetList({isOpen, onHide}: WidgetListProps) {
       <Offcanvas.Body>
         <ListGroup variant='flush'>
           {
-            Object.values(ntData)
-              .filter(entry => entry.key.toLowerCase().includes(filterText))
-              .sort((a, b) => a.key.localeCompare(b.key))
-              .map((entry) => getEntryRow(entry))
+            getFilteredAndSortedList(Object.values(ntData)).map((entry) => getEntryRow(entry))
           }
         </ListGroup>
       </Offcanvas.Body>

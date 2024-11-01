@@ -5,8 +5,8 @@
                 {
                     "w": 6,
                     "h": 3,
-                    "x": 3,
-                    "y": 0,
+                    "x": 11,
+                    "y": 2,
                     "i": "/Shuffleboard/Logging/timeMs",
                     "moved": false,
                     "static": false
@@ -14,15 +14,15 @@
                 {
                     "w": 6,
                     "h": 2,
-                    "x": 3,
-                    "y": 3,
+                    "x": 11,
+                    "y": 0,
                     "i": "/Shuffleboard/Logging/Launcher/EncoderAngleDegrees",
                     "moved": false,
                     "static": false
                 },
                 {
-                    "w": 3,
-                    "h": 2,
+                    "w": 5,
+                    "h": 5,
                     "x": 0,
                     "y": 0,
                     "i": "/SmartDashboard/Robot and Vision",
@@ -32,9 +32,36 @@
                 {
                     "w": 3,
                     "h": 2,
-                    "x": 0,
-                    "y": 6,
+                    "x": 3,
+                    "y": 5,
                     "i": "/Shuffleboard/.metadata/Tabs",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 11,
+                    "h": 9,
+                    "x": 0,
+                    "y": 9,
+                    "i": "/SmartDashboard/Auto Chooser/options",
+                    "moved": true,
+                    "static": false
+                },
+                {
+                    "w": 3,
+                    "h": 2,
+                    "x": 6,
+                    "y": 5,
+                    "i": "/Shuffleboard/Logging/Feeder/HasNoteAtTertiary",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 3,
+                    "h": 2,
+                    "x": 9,
+                    "y": 5,
+                    "i": "/Shuffleboard/Logging/Feeder/HasNoteAtPrimary",
                     "moved": false,
                     "static": false
                 },
@@ -42,63 +69,72 @@
                     "w": 3,
                     "h": 2,
                     "x": 0,
-                    "y": 8,
-                    "i": "/SmartDashboard/Auto Chooser/options",
-                    "moved": false,
-                    "static": false
-                },
-                {
-                    "w": 1,
-                    "h": 1,
-                    "x": 0,
-                    "y": 10,
-                    "i": "/SmartDashboard/Auto Chooser/.type",
-                    "moved": false,
-                    "static": false
-                },
-                {
-                    "w": 1,
-                    "h": 1,
-                    "x": 0,
-                    "y": 11,
-                    "i": "/SmartDashboard/Auto Chooser/.name",
-                    "moved": false,
-                    "static": false
-                },
-                {
-                    "w": 1,
-                    "h": 1,
-                    "x": 0,
-                    "y": 12,
-                    "i": "/Shuffleboard/Logging/Feeder/HasNoteAtTertiary",
-                    "moved": false,
-                    "static": false
-                },
-                {
-                    "w": 1,
-                    "h": 1,
-                    "x": 0,
-                    "y": 13,
-                    "i": "/Shuffleboard/Logging/Feeder/HasNoteAtPrimary",
-                    "moved": false,
-                    "static": false
-                },
-                {
-                    "w": 1,
-                    "h": 1,
-                    "x": 0,
-                    "y": 14,
+                    "y": 5,
                     "i": "/Shuffleboard/Logging/Feeder/HasNoteAtSecondary",
                     "moved": false,
                     "static": false
                 },
                 {
-                    "w": 1,
-                    "h": 1,
-                    "x": 0,
-                    "y": 15,
+                    "w": 6,
+                    "h": 5,
+                    "x": 5,
+                    "y": 0,
                     "i": "/Shuffleboard/Logging/Intake/HasNote",
                     "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 3,
+                    "h": 2,
+                    "x": 0,
+                    "y": 7,
+                    "i": "/SmartDashboard/Auto Chooser/active",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 3,
+                    "h": 2,
+                    "x": 12,
+                    "y": 5,
+                    "i": "/FMSInfo/ReplayNumber",
+                    "moved": true,
+                    "static": false
+                },
+                {
+                    "w": 3,
+                    "h": 2,
+                    "x": 9,
+                    "y": 7,
+                    "i": "/FMSInfo/StationNumber",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 3,
+                    "h": 2,
+                    "x": 6,
+                    "y": 7,
+                    "i": "/SmartDashboard/LobOntoField/MidLinePass Tilt Angle Degrees",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 3,
+                    "h": 2,
+                    "x": 12,
+                    "y": 7,
+                    "i": "/limelight-back/pipeline",
+                    "moved": true,
+                    "static": false
+                },
+                {
+                    "w": 3,
+                    "h": 2,
+                    "x": 3,
+                    "y": 7,
+                    "i": "/PathPlanner/activePath",
+                    "moved": true,
                     "static": false
                 }
             ],
@@ -120,12 +156,6 @@
                     "key": "/SmartDashboard/Auto Chooser/options"
                 },
                 {
-                    "key": "/SmartDashboard/Auto Chooser/.type"
-                },
-                {
-                    "key": "/SmartDashboard/Auto Chooser/.name"
-                },
-                {
                     "key": "/Shuffleboard/Logging/Feeder/HasNoteAtTertiary"
                 },
                 {
@@ -136,6 +166,24 @@
                 },
                 {
                     "key": "/Shuffleboard/Logging/Intake/HasNote"
+                },
+                {
+                    "key": "/SmartDashboard/Auto Chooser/active"
+                },
+                {
+                    "key": "/FMSInfo/ReplayNumber"
+                },
+                {
+                    "key": "/FMSInfo/StationNumber"
+                },
+                {
+                    "key": "/SmartDashboard/LobOntoField/MidLinePass Tilt Angle Degrees"
+                },
+                {
+                    "key": "/limelight-back/pipeline"
+                },
+                {
+                    "key": "/PathPlanner/activePath"
                 }
             ]
         },
