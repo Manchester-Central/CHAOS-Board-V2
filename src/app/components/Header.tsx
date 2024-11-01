@@ -1,12 +1,13 @@
 "use client";
 
+import { getEntryName, getEntryParentPath, NtEntry } from "@/lib/data/ntEntry";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { addTab, addWidgetToTab, deleteTab, removeWidgetFromTab, updateCurrentTab, updateTabName } from "@/lib/redux/tabsSlice";
 import { saveTabs } from "@/lib/sever-actions/tabs";
 import { faCheckCircle, faMinus, faPencil, faPlus, faTrash, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Button, Form, Offcanvas } from "react-bootstrap";
+import { Button, Form, ListGroup, Offcanvas } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -20,6 +21,7 @@ function Header() {
   const tabState = useAppSelector((app) => app.tabs);
   const ntData = useAppSelector((app) => app.nt.data);
   const [showNtSelect, setShowNtSelect] = useState(false);
+  const [filterText, setFilterText] = useState('');
 
   const handleNtSelectClose = () => setShowNtSelect(false);
   const handleNtSelectOpen = () => setShowNtSelect(true);
@@ -71,7 +73,26 @@ function Header() {
   };
 
   const isEntryAdded = (entryKey: string) => {
-    return currentTab.widgets.some(w => w.key === entryKey);
+    return currentTab?.widgets.some(w => w.key === entryKey) ?? false;
+  }
+
+  const getEntryRow = (entry: NtEntry) => {
+    const key = entry.key;
+    const button = isEntryAdded(key) 
+      ? <Button size="sm" variant={'danger'} onClick={() => entryRemovePressed(key)} style={{minWidth: 48}}><FontAwesomeIcon icon={faMinus}/></Button>
+      : <Button size="sm" onClick={() => entryAddPressed(key)} style={{minWidth: 48}}><FontAwesomeIcon icon={faPlus}/></Button>;
+    return <ListGroup.Item key={key}>
+      <div style={{margin: 5, display: 'flex', flexDirection: 'row', minHeight: 48, gap: 10}}>
+        {button} 
+        <div style={{display: 'flex', flexDirection: 'column', minWidth: '50%'}}>
+          <div className="text-muted"><small>{getEntryParentPath(entry)}</small></div>
+          <div>{getEntryName(entry)}</div>
+        </div>
+        <div style={{flexGrow: 1, textWrap: 'nowrap', maxWidth: '50%', overflow: 'hidden', textOverflow: 'ellipsis'}}>
+          {entry.value?.toString()}
+        </div>
+      </div>
+    </ListGroup.Item>;
   }
 
   return (
@@ -130,16 +151,17 @@ function Header() {
         <Offcanvas.Header closeButton>
           <Offcanvas.Title style={{display: "flex", justifyContent: "space-between"}}>
             <span style={{marginRight: 20}}>Entries</span> 
-            <Form.Control id="entryFilter" placeholder="Filter entries"/></Offcanvas.Title> {/* TODO: make filter work*/}
+            <Form.Control id="entryFilter" placeholder="Filter entries" onChange={e => setFilterText(e.target.value?.toLowerCase())} defaultValue={filterText}/></Offcanvas.Title> {/* TODO: make filter work*/}
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {Object.entries(ntData).map(([key, entry]) => // TODO: make tree view
-            <div key={key} style={{margin: 5}}>
-              {isEntryAdded(key) 
-                ? <Button size="sm" variant={'danger'} onClick={() => entryRemovePressed(key)}><FontAwesomeIcon icon={faMinus}/></Button>
-                : <Button size="sm" onClick={() => entryAddPressed(key)}><FontAwesomeIcon icon={faPlus}/></Button>
-              } <strong>{key}:</strong> <span style={{maxWidth: 200, overflowX: 'clip'}}>{entry.value?.toString()}</span>
-            </div>)}
+          <ListGroup variant='flush'>
+            {
+              Object.values(ntData)
+                .filter(entry => entry.key.toLowerCase().includes(filterText))
+                .sort((a, b) => a.key.localeCompare(b.key))
+                .map((entry) => getEntryRow(entry))
+            }
+          </ListGroup>
         </Offcanvas.Body>
       </Offcanvas>
     </>
