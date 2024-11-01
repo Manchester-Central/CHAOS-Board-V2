@@ -1,12 +1,11 @@
 'use client'
 
-import { updateNTValue } from "@/lib/redux/networkTablesSlice";
+import { updateConnected, updateNTValue } from "@/lib/redux/networkTablesSlice";
 import store from "@/lib/redux/store";
 import { AnnounceMessageParams, NetworkTables, NetworkTablesTypeInfo, NetworkTablesTypeInfos, NetworkTablesTypes } from "ntcore-ts-client"
 
-// const data: Record<string, NetworkTablesTypes | null> = {}
-
-export async function getClient() {
+let _client: NetworkTables;
+const startClient = async () => {
     // const client = NetworkTables.getInstanceByTeam(131, 5810); // Robot
     const client = NetworkTables.getInstanceByURI('localhost'); // Simulator
 
@@ -23,8 +22,17 @@ export async function getClient() {
         }, true);
     }
 
+    client.addRobotConnectionListener(isConnected => store.dispatch(updateConnected({isConnected})));
+
     // subscribe to all topic announcements
     const allTopicsTrigger = client.createTopic("", NetworkTablesTypeInfos.kString);
     allTopicsTrigger.subscribe(m => console.log(m), true, {prefix: true, topicsonly: true});
     return client;
+};
+
+export async function getClient() {
+    if (!_client) {
+        _client = await startClient();
+    }
+    return _client;
 }

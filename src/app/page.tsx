@@ -39,6 +39,7 @@ function getLayout() {
 
 export default function Home() {
   const data = useAppSelector(data => data.ntSlice.data);
+  const isConnected = useAppSelector(data => data.ntSlice.isConnected);
   const [layout, setLayout] = useState<GridLayout.Layout[]>();
 
   useEffect(() => {
@@ -52,8 +53,9 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <FullGridLayout layout={layout} className="layout" cols={12} rowHeight={50} compactType={null} autoSize={true} resizeHandles={["sw", "nw", "se", "ne"]} onLayoutChange={saveLayout}>
-        {defaultNtKeys.map((key) => <div key={key} style={{padding: 10}}><div style={{overflow: 'auto', minHeight: '100%', maxHeight: '100%'}}>{data[key]}</div></div>)}
+      {isConnected.toString()}
+      <FullGridLayout layout={layout} className="layout" cols={20} rowHeight={50} compactType={null} autoSize={true} resizeHandles={["sw", "nw", "se", "ne"]} onLayoutChange={saveLayout}>
+        {defaultNtKeys.map((key) => <div key={key} style={{padding: 10}}><div style={{overflow: 'auto', minHeight: '100%', maxHeight: '100%'}}>{data[key]?.toString()}</div></div>)}
       </FullGridLayout>
     </div>
   );
