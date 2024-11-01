@@ -1,8 +1,8 @@
 'use client'
 
-import { updateConnected, updateNTValue } from "@/lib/redux/networkTablesSlice";
+import { addNTEntry, updateConnected, updateNTValue } from "@/lib/redux/networkTablesSlice";
 import store from "@/lib/redux/store";
-import { AnnounceMessageParams, NetworkTables, NetworkTablesTypeInfo, NetworkTablesTypeInfos, NetworkTablesTypes } from "ntcore-ts-client"
+import { AnnounceMessageParams, NetworkTables, NetworkTablesTypeInfo, NetworkTablesTypeInfos, NetworkTablesTypes,  } from "ntcore-ts-client"
 
 let _client: NetworkTables;
 const startClient = async () => {
@@ -14,10 +14,11 @@ const startClient = async () => {
     const originalOnAnnounce = socket.onAnnounce;
     socket.onAnnounce = (params: AnnounceMessageParams) => {
         // console.log(`New topic announced: ${params.name}`);
-        const topic = client.createTopic(params.name, params.type as unknown as NetworkTablesTypeInfo);
+        const topic = client.createTopic(params.name, params.type as unknown as NetworkTablesTypeInfo); // TODO: type is wrong
+        store.dispatch(addNTEntry({topicName: params.name, type: params.type}));
         originalOnAnnounce(params);
         topic.subscribe(value => {
-            store.dispatch(updateNTValue({topicName: topic.name, value}))
+            store.dispatch(updateNTValue({topicName: topic.name, value}));
             // data[topic.name] = value;
         }, true);
     }

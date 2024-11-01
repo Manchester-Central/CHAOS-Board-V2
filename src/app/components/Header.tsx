@@ -78,7 +78,7 @@ function Header() {
             <NavDropdown.Header>
               Select a tab
             </NavDropdown.Header>
-            {Object.entries(allTabs).map(([tabName, value]) => (
+            {Object.keys(allTabs).sort((a, b) => a.localeCompare(b)).map(tabName => (
               <NavDropdown.Item key={tabName} onClick={() => updateSelectedTab(tabName)}>
                 {tabName}
               </NavDropdown.Item>
