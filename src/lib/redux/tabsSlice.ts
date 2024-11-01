@@ -7,7 +7,7 @@ import { Tab } from "../data/tab";
 
 const initialState = {
     allTabs: {},
-    currentTab: '',
+    currentTabName: '',
 } satisfies TabsState as TabsState;
 
 const tabsSlice = createSlice({
@@ -17,14 +17,25 @@ const tabsSlice = createSlice({
     loadInitialTabs(state, action: PayloadAction<TabsState>) {
       const tabs = action.payload;
       state.allTabs = tabs.allTabs;
-      state.currentTab = tabs.currentTab;
+      state.currentTabName = tabs.currentTabName;
     },
     updateCurrentTab(state, action: PayloadAction<{ tabName: string }>) {
-      state.currentTab = action.payload.tabName;
+      state.currentTabName = action.payload.tabName;
     },
     updateTab(state, action: PayloadAction<Tab>) {
       const updatedTab = action.payload;
       state.allTabs[updatedTab.name] = updatedTab;
+    },
+    addWidgetToTab(state, action: PayloadAction<{ tabName: string, entryKey: string }>) {
+      const {tabName, entryKey} = action.payload;
+      const currentTab = state.allTabs[tabName];
+      currentTab.widgets = currentTab.widgets.filter(w => w.key !== entryKey);
+      currentTab.widgets.push({key: entryKey});
+    },
+    removeWidgetFromTab(state, action: PayloadAction<{ tabName: string, entryKey: string }>) {
+      const {tabName, entryKey} = action.payload;
+      const currentTab = state.allTabs[tabName];
+      currentTab.widgets = currentTab.widgets.filter(w => w.key !== entryKey);
     },
     addTab(state, action: PayloadAction<{ tabName: string }>) {
       const tabName = action.payload.tabName;
@@ -40,7 +51,7 @@ const tabsSlice = createSlice({
       currentTab.name = newTabName;
       state.allTabs[newTabName] = currentTab;
       delete state.allTabs[oldTabName];
-      state.currentTab = newTabName;
+      state.currentTabName = newTabName;
     },
     deleteTab(state, action: PayloadAction<{ tabName: string }>) {
       const tabName = action.payload.tabName;
@@ -48,10 +59,10 @@ const tabsSlice = createSlice({
       if (Object.keys(state.allTabs).length === 0) {
         state.allTabs = defaultInitialTabData.allTabs;
       }
-      state.currentTab = Object.keys(state.allTabs)[0];
+      state.currentTabName = Object.keys(state.allTabs)[0];
     },
   },
 });
 
-export const { loadInitialTabs, updateCurrentTab, updateTab, addTab, updateTabName, deleteTab } = tabsSlice.actions;
+export const { loadInitialTabs, updateCurrentTab, updateTab, addWidgetToTab, removeWidgetFromTab, addTab, updateTabName, deleteTab } = tabsSlice.actions;
 export default tabsSlice.reducer;

@@ -1,13 +1,31 @@
 {
     "allTabs": {
-        "0: Drivers Tab": {
+        "Debug": {
             "layout": [
+                {
+                    "w": 6,
+                    "h": 3,
+                    "x": 3,
+                    "y": 0,
+                    "i": "/Shuffleboard/Logging/timeMs",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 6,
+                    "h": 2,
+                    "x": 3,
+                    "y": 3,
+                    "i": "/Shuffleboard/Logging/Launcher/EncoderAngleDegrees",
+                    "moved": false,
+                    "static": false
+                },
                 {
                     "w": 3,
                     "h": 2,
                     "x": 0,
                     "y": 0,
-                    "i": "/Shuffleboard/Logging/timeMs",
+                    "i": "/SmartDashboard/Robot and Vision",
                     "moved": false,
                     "static": false
                 },
@@ -16,43 +34,173 @@
                     "h": 2,
                     "x": 0,
                     "y": 2,
+                    "i": "/Shuffleboard/.metadata/Selected",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 3,
+                    "h": 2,
+                    "x": 0,
+                    "y": 6,
+                    "i": "/Shuffleboard/.metadata/Tabs",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 1,
+                    "h": 1,
+                    "x": 0,
+                    "y": 8,
                     "i": "/FMSInfo/IsRedAlliance",
                     "moved": false,
                     "static": false
                 },
                 {
-                    "w": 7,
-                    "h": 4,
-                    "x": 3,
-                    "y": 0,
-                    "i": "/SmartDashboard/Robot2024/State",
+                    "w": 1,
+                    "h": 1,
+                    "x": 0,
+                    "y": 9,
+                    "i": "/FMSInfo/GameSpecificMessage",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 1,
+                    "h": 1,
+                    "x": 0,
+                    "y": 10,
+                    "i": "/SmartDashboard/SwerveDrive/.controllable",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 1,
+                    "h": 1,
+                    "x": 0,
+                    "y": 11,
+                    "i": "/SmartDashboard/SwerveDrive/.name",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 1,
+                    "h": 1,
+                    "x": 0,
+                    "y": 12,
+                    "i": "/SmartDashboard/SwerveDrive/Angle_PID_Tuner/I",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 1,
+                    "h": 1,
+                    "x": 0,
+                    "y": 13,
+                    "i": "/SmartDashboard/SwerveDrive/Angle_PID_Tuner/D",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 1,
+                    "h": 1,
+                    "x": 0,
+                    "y": 14,
+                    "i": "/limelight-back/pipeline",
                     "moved": false,
                     "static": false
                 }
             ],
-            "name": "0: Drivers Tab",
+            "name": "Debug",
             "widgets": [
                 {
                     "key": "/Shuffleboard/Logging/timeMs"
                 },
                 {
+                    "key": "/Shuffleboard/Logging/Launcher/EncoderAngleDegrees"
+                },
+                {
+                    "key": "/SmartDashboard/Robot and Vision"
+                },
+                {
+                    "key": "/Shuffleboard/.metadata/Selected"
+                },
+                {
+                    "key": "/Shuffleboard/.metadata/Tabs"
+                },
+                {
                     "key": "/FMSInfo/IsRedAlliance"
                 },
                 {
-                    "key": "/SmartDashboard/Robot2024/State"
+                    "key": "/FMSInfo/GameSpecificMessage"
+                },
+                {
+                    "key": "/SmartDashboard/SwerveDrive/.controllable"
+                },
+                {
+                    "key": "/SmartDashboard/SwerveDrive/.name"
+                },
+                {
+                    "key": "/SmartDashboard/SwerveDrive/Angle_PID_Tuner/I"
+                },
+                {
+                    "key": "/SmartDashboard/SwerveDrive/Angle_PID_Tuner/D"
+                },
+                {
+                    "key": "/limelight-back/pipeline"
                 }
             ]
         },
-        "1: Coach Tab": {
-            "layout": [],
-            "name": "1: Coach Tab",
-            "widgets": []
+        "Coach Tab": {
+            "layout": [
+                {
+                    "w": 4,
+                    "h": 2,
+                    "x": 0,
+                    "y": 0,
+                    "i": "/FMSInfo/IsRedAlliance",
+                    "moved": false,
+                    "static": false
+                },
+                {
+                    "w": 11,
+                    "h": 11,
+                    "x": 0,
+                    "y": 2,
+                    "i": "/SmartDashboard/Auto Chooser/options",
+                    "moved": false,
+                    "static": false
+                }
+            ],
+            "name": "Coach Tab",
+            "widgets": [
+                {
+                    "key": "/FMSInfo/IsRedAlliance"
+                },
+                {
+                    "key": "/SmartDashboard/Auto Chooser/options"
+                }
+            ]
         },
-        "2: Swerve Debug": {
-            "layout": [],
-            "name": "2: Swerve Debug",
-            "widgets": []
+        "Swerve Drive": {
+            "layout": [
+                {
+                    "w": 4,
+                    "h": 3,
+                    "x": 5,
+                    "y": 2,
+                    "i": "/SmartDashboard/SwerveDrive/Robot",
+                    "moved": false,
+                    "static": false
+                }
+            ],
+            "name": "Swerve Drive",
+            "widgets": [
+                {
+                    "key": "/SmartDashboard/SwerveDrive/Robot"
+                }
+            ]
         }
     },
-    "currentTab": "0: Drivers Tab"
+    "currentTabName": "Coach Tab"
 }

@@ -15,8 +15,8 @@ const FullGridLayout = WidthProvider(GridLayout);
 export default function Home() {
   const dispatch = useAppDispatch();
   const data = useAppSelector(data => data.nt.data);
-  const currentTabName = useAppSelector(app => app.tabs.currentTab);
-  const currentTab = useAppSelector(app => app.tabs.allTabs[app.tabs.currentTab]);
+  const currentTabName = useAppSelector(app => app.tabs.currentTabName);
+  const currentTab = useAppSelector(app => app.tabs.allTabs[app.tabs.currentTabName]);
 
   useEffect(() => {
     getClient().then(() => console.log('connected')).catch(error => console.error(error));
@@ -26,7 +26,6 @@ export default function Home() {
 
   const updateLayout = (layout: GridLayout.Layout[]) => {
     const tabUpdate = {...currentTab, layout};
-    console.log(tabUpdate);
     dispatch(updateTab(tabUpdate));
   }
 
