@@ -14,7 +14,7 @@ function WidgetDisplay({widget}: WidgetDisplayProps) {
 
   return (
       <Card style={{overflow: 'auto', minHeight: '100%', maxHeight: '100%'}}>
-        <CardHeader>
+        <CardHeader title={widget.key}>
             <div style={{flexGrow: 2, textWrap: 'nowrap', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis'}}>{getEntryName(widget.key)} <small>{getEntryParentPath(widget.key)}</small></div>
         </CardHeader>
         <CardBody>
