@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { loadInitialTabs, updateTab } from "@/lib/redux/tabsSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import GridLayout, { WidthProvider } from "react-grid-layout";
 import { getClient } from "../lib/networktables/NTClient";
 import styles from "./page.module.css";
@@ -15,13 +15,12 @@ const FullGridLayout = WidthProvider(GridLayout);
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const data = useAppSelector(data => data.nt.data);
   const currentTabName = useAppSelector(app => app.tabs.currentTabName);
   const currentTab = useAppSelector(app => app.tabs.allTabs[app.tabs.currentTabName]);
+  const isEditingLayout = useAppSelector(data => data.ui.isEditingLayout);
 
   useEffect(() => {
     getClient().then(() => console.log('connected')).catch(error => console.error(error));
-    // setLayout(getLayout());
     getTabs().then(tabs => dispatch(loadInitialTabs(tabs)));
   }, []);
 
@@ -36,7 +35,21 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <FullGridLayout layout={currentTab.layout} className="layout" cols={20} rowHeight={50} compactType={null} autoSize={true} resizeHandles={["sw", "nw", "se", "ne"]} onLayoutChange={updateLayout} preventCollision={true} allowOverlap={true}>
+      <FullGridLayout 
+        isDraggable={isEditingLayout}
+        isDroppable={isEditingLayout}
+        isResizable={isEditingLayout}
+        layout={currentTab.layout}
+        className="layout"
+        cols={20}
+        rowHeight={50}
+        compactType={null}
+        autoSize={true}
+        resizeHandles={["sw", "nw", "se", "ne"]} 
+        onLayoutChange={updateLayout}
+        preventCollision={true}
+        allowOverlap={true}
+      >
         {currentTab.widgets.map((widget) => <div key={widget.key}>
           <WidgetDisplay widget={widget} />
         </div>)}

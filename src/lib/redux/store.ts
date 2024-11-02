@@ -2,9 +2,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import ntSlice from './networkTablesSlice'
 import tabsSlice from './tabsSlice'
+import uiStateSlice from './uiStateSlice'
 
 const store = configureStore({
     reducer: {
+      'ui': uiStateSlice,
       'nt': ntSlice,
       'tabs': tabsSlice,
     }

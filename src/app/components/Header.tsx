@@ -3,16 +3,18 @@
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { addTab, deleteTab, updateCurrentTab, updateTabName } from "@/lib/redux/tabsSlice";
 import { saveTabs } from "@/lib/sever-actions/tabs";
-import { faCheckCircle, faPencil, faPlus, faTrash, faWarning } from "@fortawesome/free-solid-svg-icons";
+import { faCancel, faCheckCircle, faPencil, faPlus, faTrash, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import WidgetList from "./WidgetList";
+import { setIsEditing } from "@/lib/redux/uiStateSlice";
 
 function Header() {
   const dispatch = useAppDispatch();
+  const isEditingLayout = useAppSelector((app) => app.ui.isEditingLayout);
   const isConnected = useAppSelector((app) => app.nt.isConnected);
   const currentTabName = useAppSelector((app) => app.tabs.currentTabName);
   const allTabs = useAppSelector((app) => app.tabs.allTabs);
@@ -104,7 +106,13 @@ function Header() {
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
-        <Nav.Link onClick={handleNtSelectOpen}>
+        <Nav.Link onClick={() => dispatch(setIsEditing(!isEditingLayout))}>
+          {isEditingLayout 
+            ? <><FontAwesomeIcon icon={faCancel} /> Stop Editing Mode </>
+            : <><FontAwesomeIcon icon={faPencil} /> Enter Editing Mode </>
+          }
+        </Nav.Link>
+        <Nav.Link style={{marginLeft: 50}} onClick={handleNtSelectOpen}>
           <FontAwesomeIcon icon={faPlus} /> Add Widget
         </Nav.Link>
         <Navbar.Text style={{marginLeft: 50}} className="justify-content-end">
